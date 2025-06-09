@@ -119,10 +119,10 @@ class MainScreen:
             weekday_str = currentTime.strftime('%a')
             draw.text((23, 6), weekday_str, dark_pink, font=self.font)
             #weather
-            weather = self.modules['weather']
-            one_call = weather.getWeather()
-            if (one_call != None):
-                curr_temp = round(one_call.current.temperature(temp_type)['temp'])
+            weather_module = self.modules['weather']
+            weather = weather_module.getWeather()
+            if weather is not None:
+                curr_temp = round(weather.temperature(temp_type)['temp'])
                 draw.text((33, 6), padToTwoDigit(curr_temp), white, font=self.font)
                 draw.point((41,6), fill=white)
         
