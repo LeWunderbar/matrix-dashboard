@@ -123,8 +123,8 @@ class MainScreen:
             weather = weather_module.getWeather()
             if weather is not None:
                 curr_temp = round(weather.temperature(temp_type)['temp'])
-                draw.text((25, 14), padToTwoDigit(curr_temp), white, font=self.font)
-                draw.point((33,14), fill=white)
+                draw.text((20, 12), padToTwoDigit(curr_temp), white, font=self.font)
+                draw.point((33,12), fill=white)
         
         #notifications
         noti_list = self.modules['notifications'].getNotificationList()
