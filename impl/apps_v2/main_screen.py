@@ -124,7 +124,7 @@ class MainScreen:
         weather = weather_module.getWeather()
         if weather is not None:
             curr_temp = round(weather.temperature(temp_type)['temp'])
-            draw.text((13, 9), f"{padToTwoDigit(curr_temp)}°C", white, font=self.font)
+            draw.text((23, 9), f"{padToTwoDigit(curr_temp)}°C", white, font=self.font)
         
         #notifications
         noti_list = self.modules['notifications'].getNotificationList()
