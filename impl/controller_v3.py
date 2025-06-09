@@ -125,6 +125,11 @@ def main():
     matrix = RGBMatrix(options = options)
 
     rotation_time = math.floor(time.time())
+
+    app_rotation = config.getboolean('main', 'allow_app_rotation', fallback=None)
+    if app_rotation is None:
+        app_rotation = True
+
     while(True):
         while (not encoderQueue.empty()):
             encoder_state += encoderQueue.get()
@@ -142,7 +147,7 @@ def main():
 
         isHorizontalSnapshot = copy.copy(isHorizontalDict['value'])
 
-        if (True): #Enable / Disable Auto App Rotaion
+        if (app_rotation):
             new_rotation_time = math.floor(time.time())
             if new_rotation_time % 10 == 0 and new_rotation_time - rotation_time >= 10:
                 current_app_idx += 1

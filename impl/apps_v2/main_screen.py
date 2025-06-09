@@ -50,6 +50,10 @@ class MainScreen:
 
         self.old_noti_list = []
         self.queued_frames = []
+
+        global temp_type = config.get('OWM', 'type', fallback=None)
+        if location is None:
+            temp_type = "fahrenheit"
     
     def generate(self, isHorizontal, inputStatus):
         if not isHorizontal:
@@ -119,7 +123,7 @@ class MainScreen:
             weather = self.modules['weather']
             one_call = weather.getWeather()
             if (one_call != None):
-                curr_temp = round(one_call.current.temperature('fahrenheit')['temp'])
+                curr_temp = round(one_call.current.temperature(temp_type)['temp'])
                 draw.text((33, 6), padToTwoDigit(curr_temp), white, font=self.font)
                 draw.point((41,6), fill=white)
         
