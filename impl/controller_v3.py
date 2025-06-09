@@ -98,7 +98,7 @@ def main():
     app_list = [
                     main_screen.MainScreen(config, modules, callbacks),
                     # notion_v2.NotionScreen(config, modules, callbacks),
-                    # weather.WeatherScreen(config, modules, callbacks),
+                    weather.WeatherScreen(config, modules, callbacks),
                     # subcount.SubcountScreen(config, modules, callbacks),
                     # gif_viewer.GifScreen(config, modules, callbacks),
                     # life.GameOfLifeScreen(config, modules, callbacks)
