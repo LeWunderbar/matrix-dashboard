@@ -1,6 +1,5 @@
 from PIL import Image, ImageFont, ImageDraw
 import os
-import numpy as np
 import time
 from InputStatus import InputStatusEnum
 from datetime import datetime
@@ -22,61 +21,40 @@ class WeatherScreen:
         self.high_color = literal_eval(config.get('Weather Screen', 'high_color', fallback="(255,255,255)"))
 
     def generate(self, isHorizontal, inputStatus):
-        if (inputStatus is InputStatusEnum.SINGLE_PRESS):
+        if inputStatus is InputStatusEnum.SINGLE_PRESS:
             self.default_actions['toggle_display']()
-        elif (inputStatus is InputStatusEnum.ENCODER_INCREASE):
+        elif inputStatus is InputStatusEnum.ENCODER_INCREASE:
             self.default_actions['switch_next_app']()
-        elif (inputStatus is InputStatusEnum.ENCODER_DECREASE):
+        elif inputStatus is InputStatusEnum.ENCODER_DECREASE:
             self.default_actions['switch_prev_app']()
-        
+
         frame = Image.new("RGB", (self.canvas_width, self.canvas_height), (0,0,0))
-
         weather_module = self.modules['weather']
-        one_call = weather_module.getWeather()
+        weather = weather_module.getWeather()
 
-        print("Weather data:", one_call)
-        if one_call is not None:
-            forecast = one_call.forecast_daily[0]
-            rain = round(forecast.precipitation_probability*100)
-            temps = forecast.temperature('fahrenheit')
-            min_temp = round(temps['min'])
-            max_temp = round(temps['max'])
-            curr_temp = round(one_call.current.temperature('fahrenheit')['temp'])
-            humidity = round(one_call.current.humidity)
-            sunrise_timestamp = one_call.forecast_daily[0].sunrise_time()
-            sunset_timestamp = one_call.forecast_daily[0].sunset_time()
-            dtsr = datetime.fromtimestamp(sunrise_timestamp, tz=tz.tzlocal())
-            dtss = datetime.fromtimestamp(sunset_timestamp, tz=tz.tzlocal())
-            weather_icon_name = one_call.current.weather_icon_name
+        if weather is not None:
+            # Current weather only (no forecast or sunrise/sunset)
+            curr_temp = round(weather.temperature('fahrenheit')['temp'])
+            humidity = weather.humidity
+            weather_icon_name = weather.weather_icon_name
 
             draw = ImageDraw.Draw(frame)
-            draw.text((3,3), str(min_temp), self.low_color, font=self.font)
-            draw.text((13,3), str(curr_temp), self.text_color, font=self.font)
-            draw.text((23,3), str(max_temp), self.high_color, font=self.font)
+            # No min/max temp from current API, so just show current temp in the middle
+            draw.text((13, 3), str(curr_temp), self.text_color, font=self.font)
+            # Optionally, you can display "CURRENT" or similar
+            draw.text((3, 3), "CUR", self.text_color, font=self.font)
 
-            draw.text((3,10), 'RAIN', self.text_color, font=self.font)
-            draw.text((21,10), str(rain) + '%', self.text_color, font=self.font)
+            # No rain probability from current API, so skip or use static text
+            draw.text((3, 10), 'HUMIDITY', self.text_color, font=self.font)
+            draw.text((37, 24), str(humidity) + '%', self.text_color, font=self.font)
 
-            draw.text((3,24), 'HUMIDITY', self.text_color, font=self.font)
-            draw.text((37,24), str(humidity) + '%', self.text_color, font=self.font)
+            # No sunrise/sunset, so skip or use static text
+            # draw.text((3, 17), 'CURRENT', self.text_color, font=self.font)
 
-            currentTime = datetime.now(tz=tz.tzlocal())
-            if (currentTime.hour > dtsr.hour and currentTime.hour <= dtss.hour):
-                draw.text((3,17), 'SET', self.text_color, font=self.font)
-                hours = dtss.hour % 12
-                if (hours == 0):
-                    hours += 12 
-                draw.text((17,17), str(hours) + ':' + convertToTwoDigits(dtss.minute), self.text_color, font=self.font)
-            else:
-                draw.text((3,17), 'RISE', self.text_color, font=self.font)
-                hours = dtsr.hour % 12
-                if (hours == 0):
-                    hours += 12 
-                draw.text((21,17), str(hours) + ':' + convertToTwoDigits(dtsr.minute), self.text_color, font=self.font)
-
+            # Weather icon
             if weather_icon_name in self.icons:
-                frame.paste(self.icons[weather_icon_name], (40,1))
-        
+                frame.paste(self.icons[weather_icon_name], (40, 1))
+
         return frame
 
 def generateIconMap():
@@ -87,7 +65,7 @@ def generateIconMap():
                 icon_map[file[:-4]] = Image.open('apps_v2/res/weather/' + file).convert("RGB")
     return icon_map
 
-def convertToTwoDigits(num):
+def convertToTwoDigits(num):  # (Optional, not used here)
     if num < 10:
         return '0' + str(num)
     return str(num)
