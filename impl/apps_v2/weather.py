@@ -20,6 +20,8 @@ class WeatherScreen:
         self.low_color = literal_eval(config.get('Weather Screen', 'low_color', fallback="(255,255,255)"))
         self.high_color = literal_eval(config.get('Weather Screen', 'high_color', fallback="(255,255,255)"))
 
+        self.temp_type = config.get('OWM', 'type', fallback="fahrenheit")
+
     def generate(self, isHorizontal, inputStatus):
         if inputStatus is InputStatusEnum.SINGLE_PRESS:
             self.default_actions['toggle_display']()
@@ -34,22 +36,20 @@ class WeatherScreen:
 
         if weather is not None:
             # Current weather only (no forecast or sunrise/sunset)
-            curr_temp = round(weather.temperature('fahrenheit')['temp'])
+            curr_temp = round(weather.temperature(self.temp_type)['temp'])
             humidity = weather.humidity
             weather_icon_name = weather.weather_icon_name
+            wind_speed = round(weather.wind()['speed'] * 3.6)  # Convert m/s to km/h
+            pollution_index = weather_module.getPollution()
 
             draw = ImageDraw.Draw(frame)
-            # No min/max temp from current API, so just show current temp in the middle
-            draw.text((13, 3), str(curr_temp), self.text_color, font=self.font)
-            # Optionally, you can display "CURRENT" or similar
-            draw.text((3, 3), "CUR", self.text_color, font=self.font)
 
-            # No rain probability from current API, so skip or use static text
-            draw.text((3, 10), 'HUMIDITY', self.text_color, font=self.font)
-            draw.text((37, 24), str(humidity) + '%', self.text_color, font=self.font)
-
-            # No sunrise/sunset, so skip or use static text
-            # draw.text((3, 17), 'CURRENT', self.text_color, font=self.font)
+            # Display Temp, Wind, Pollution, Humidity
+            draw.text((3, 3), f"Temp {curr_temp}°C", self.text_color, font=self.font)
+            draw.text((3, 10), f"Wind {wind_speed} Kmh", self.text_color, font=self.font)
+            if pollution_index is not None:
+                draw.text((3, 17), f"Pollution {pollution_index}", self.text_color, font=self.font)
+            draw.text((3, 24), f"Humidity {humidity}%", self.text_color, font=self.font)
 
             # Weather icon
             if weather_icon_name in self.icons:
@@ -65,7 +65,7 @@ def generateIconMap():
                 icon_map[file[:-4]] = Image.open('apps_v2/res/weather/' + file).convert("RGB")
     return icon_map
 
-def convertToTwoDigits(num):  # (Optional, not used here)
+def convertToTwoDigits(num):
     if num < 10:
         return '0' + str(num)
     return str(num)
