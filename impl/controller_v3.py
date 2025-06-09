@@ -126,9 +126,7 @@ def main():
 
     rotation_time = math.floor(time.time())
 
-    app_rotation = config.getboolean('main', 'allow_app_rotation', fallback=None)
-    if app_rotation is None:
-        app_rotation = True
+    app_rotation = config.getboolean('main', 'allow_app_rotation', fallback=True)
 
     while(True):
         while (not encoderQueue.empty()):
