@@ -111,9 +111,9 @@ class MainScreen:
         
         if (self.on_cycle):
             #date
-            draw.text((23, 6), padToTwoDigit(month), dark_pink, font=self.font)
+            draw.text((33, 6), padToTwoDigit(month), dark_pink, font=self.font)
             draw.text((30, 6), ".", dark_pink, font=self.font)
-            draw.text((33, 6), padToTwoDigit(day), dark_pink, font=self.font)
+            draw.text((23, 6), padToTwoDigit(day), dark_pink, font=self.font)
         else:
             #dayOfWeek
             weekday_str = currentTime.strftime('%a')
