@@ -34,6 +34,7 @@ class WeatherScreen:
         weather_module = self.modules['weather']
         one_call = weather_module.getWeather()
 
+        print("Weather data:", one_call)
         if one_call is not None:
             forecast = one_call.forecast_daily[0]
             rain = round(forecast.precipitation_probability*100)
