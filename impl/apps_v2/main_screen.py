@@ -105,26 +105,26 @@ class MainScreen:
         frame = self.bgs['sakura'].copy()
         draw = ImageDraw.Draw(frame)
 
-        draw.text((3, 9), padToTwoDigit(hours), light_pink, font=self.font)
-        draw.text((10, 9), ":", light_pink, font=self.font)
-        draw.text((13, 9), padToTwoDigit(minutes), light_pink, font=self.font)
+        draw.text((3, 3), padToTwoDigit(hours), light_pink, font=self.font)
+        draw.text((10, 3), ":", light_pink, font=self.font)
+        draw.text((13, 3), padToTwoDigit(minutes), light_pink, font=self.font)
         
         if (self.on_cycle):
             #date
-            draw.text((33, 9), padToTwoDigit(month), dark_pink, font=self.font)
-            draw.text((30, 9), ".", dark_pink, font=self.font)
-            draw.text((23, 9), padToTwoDigit(day), dark_pink, font=self.font)
+            draw.text((33, 3), padToTwoDigit(month), dark_pink, font=self.font)
+            draw.text((30, 3), ".", dark_pink, font=self.font)
+            draw.text((23, 3), padToTwoDigit(day), dark_pink, font=self.font)
         else:
             #dayOfWeek
             weekday_str = currentTime.strftime('%a')
-            draw.text((23, 9), weekday_str, dark_pink, font=self.font)
+            draw.text((23, 3), weekday_str, dark_pink, font=self.font)
 
         #weather
         weather_module = self.modules['weather']
         weather = weather_module.getWeather()
         if weather is not None:
             curr_temp = round(weather.temperature(temp_type)['temp'])
-            draw.text((13, 15), padToTwoDigit(f"{curr_temp}°C"), white, font=self.font)
+            draw.text((13, 9), f"{padToTwoDigit(curr_temp)}°C", white, font=self.font)
         
         #notifications
         noti_list = self.modules['notifications'].getNotificationList()
