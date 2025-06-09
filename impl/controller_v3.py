@@ -95,12 +95,14 @@ def main():
                     'spotify' : spotify_module.SpotifyModule(config)
                 }
 
-    app_list = [main_screen.MainScreen(config, modules, callbacks),
-                # notion_v2.NotionScreen(config, modules, callbacks),
-                weather.WeatherScreen(config, modules, callbacks),
-                # subcount.SubcountScreen(config, modules, callbacks),
-                # gif_viewer.GifScreen(config, modules, callbacks),
-                # life.GameOfLifeScreen(config, modules, callbacks)]
+    app_list = [
+                    main_screen.MainScreen(config, modules, callbacks),
+                    # notion_v2.NotionScreen(config, modules, callbacks),
+                    weather.WeatherScreen(config, modules, callbacks),
+                    # subcount.SubcountScreen(config, modules, callbacks),
+                    # gif_viewer.GifScreen(config, modules, callbacks),
+                    #life.GameOfLifeScreen(config, modules, callbacks)
+                ]
 
     currentdir = os.path.dirname(os.path.abspath(inspect.getfile(inspect.currentframe())))
     parentdir = os.path.dirname(currentdir)
