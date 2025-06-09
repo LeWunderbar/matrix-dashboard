@@ -45,11 +45,11 @@ class WeatherScreen:
             draw = ImageDraw.Draw(frame)
 
             # Display Temp, Wind, Pollution, Humidity
-            draw.text((3, 3), f"Temp {curr_temp}°C", self.text_color, font=self.font)
-            draw.text((3, 10), f"Wind {wind_speed} Kmh", self.text_color, font=self.font)
+            draw.text((3, 3), f"TEMP {curr_temp}°C", self.text_color, font=self.font)
+            draw.text((3, 10), f"WIND {wind_speed}", self.text_color, font=self.font)
             if pollution_index is not None:
-                draw.text((3, 17), f"Pollution {pollution_index}", self.text_color, font=self.font)
-            draw.text((3, 24), f"Humidity {humidity}%", self.text_color, font=self.font)
+                draw.text((3, 17), f"POLL. {pollution_index}", self.text_color, font=self.font)
+            draw.text((3, 24), f"HUMIDITY {humidity}%", self.text_color, font=self.font)
 
             # Weather icon
             if weather_icon_name in self.icons:
