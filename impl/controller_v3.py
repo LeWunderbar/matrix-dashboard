@@ -24,10 +24,10 @@ import select
 from apps_v2 import main_screen, notion_v2, subcount, gif_viewer, weather, life, spotify_player
 from modules import weather_module, notification_module, spotify_module
 
-sw = 13
-enc_A = 5
-enc_B = 6
-tilt = 19
+sw = 13   # rotary encoder’s push-button
+enc_A = 5 # otary encoder’s "A" (CLK)
+enc_B = 6 # The rotary encoder’s "B" (DT) 
+tilt = 19 # Tilt Switch
 
 def main():
     brightness = 100
@@ -99,7 +99,7 @@ def main():
                 # notion_v2.NotionScreen(config, modules, callbacks),
                 # weather.WeatherScreen(config, modules, callbacks),
                 # subcount.SubcountScreen(config, modules, callbacks),
-                gif_viewer.GifScreen(config, modules, callbacks),
+                # gif_viewer.GifScreen(config, modules, callbacks),
                 life.GameOfLifeScreen(config, modules, callbacks)]
 
     currentdir = os.path.dirname(os.path.abspath(inspect.getfile(inspect.currentframe())))
@@ -142,10 +142,11 @@ def main():
 
         isHorizontalSnapshot = copy.copy(isHorizontalDict['value'])
 
-        new_rotation_time = math.floor(time.time())
-        if new_rotation_time % 10 == 0 and new_rotation_time - rotation_time >= 10:
-            current_app_idx += 1
-            rotation_time = new_rotation_time
+        if (True): #Enable / Disable Auto App Rotaion
+            new_rotation_time = math.floor(time.time())
+            if new_rotation_time % 10 == 0 and new_rotation_time - rotation_time >= 10:
+                current_app_idx += 1
+                rotation_time = new_rotation_time
         
         frame = app_list[current_app_idx % len(app_list)].generate(isHorizontalSnapshot, inputStatusSnapshot)
         if not displayOn:

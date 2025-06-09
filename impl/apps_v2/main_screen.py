@@ -113,7 +113,8 @@ class MainScreen:
             draw.text((33, 6), padToTwoDigit(day), dark_pink, font=self.font)
         else:
             #dayOfWeek
-            draw.text((23, 6), padToTwoDigit(dayOfWeek), dark_pink, font=self.font)
+            weekday_str = currentTime.strftime('%a')
+            draw.text((23, 6), weekday_str, dark_pink, font=self.font)
             #weather
             weather = self.modules['weather']
             one_call = weather.getWeather()
