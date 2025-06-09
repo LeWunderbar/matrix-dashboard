@@ -51,10 +51,9 @@ class MainScreen:
         self.old_noti_list = []
         self.queued_frames = []
 
-        global temp_type = config.get('OWM', 'type', fallback=None)
-        if location is None:
-            temp_type = "fahrenheit"
-    
+        global temp_type
+        temp_type = config.get('OWM', 'type', fallback="fahrenheit")
+        
     def generate(self, isHorizontal, inputStatus):
         if not isHorizontal:
             return self.vertical.generate(isHorizontal, inputStatus)
