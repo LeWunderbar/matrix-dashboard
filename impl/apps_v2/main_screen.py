@@ -105,19 +105,19 @@ class MainScreen:
         frame = self.bgs['sakura'].copy()
         draw = ImageDraw.Draw(frame)
 
-        draw.text((3, 6), padToTwoDigit(hours), light_pink, font=self.font)
-        draw.text((10, 6), ":", light_pink, font=self.font)
-        draw.text((13, 6), padToTwoDigit(minutes), light_pink, font=self.font)
+        draw.text((3, 3), padToTwoDigit(hours), light_pink, font=self.font)
+        draw.text((10, 3), ":", light_pink, font=self.font)
+        draw.text((13, 3), padToTwoDigit(minutes), light_pink, font=self.font)
         
         if (self.on_cycle):
             #date
-            draw.text((33, 6), padToTwoDigit(month), dark_pink, font=self.font)
-            draw.text((30, 6), ".", dark_pink, font=self.font)
-            draw.text((23, 6), padToTwoDigit(day), dark_pink, font=self.font)
+            draw.text((33, 3), padToTwoDigit(month), dark_pink, font=self.font)
+            draw.text((30, 3), ".", dark_pink, font=self.font)
+            draw.text((23, 3), padToTwoDigit(day), dark_pink, font=self.font)
         else:
             #dayOfWeek
             weekday_str = currentTime.strftime('%a')
-            draw.text((23, 6), weekday_str, dark_pink, font=self.font)
+            draw.text((23, 3), weekday_str, dark_pink, font=self.font)
         
         #notifications
         noti_list = self.modules['notifications'].getNotificationList()
