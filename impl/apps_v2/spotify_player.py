@@ -94,6 +94,9 @@ class SpotifyScreen:
                     print(f"Error loading album art: {e}")
                     self.current_art_img = None
 
+            if self.current_art_img is not None:
+                frame.paste(self.current_art_img, (0,0))
+
             draw.line((38,15,58,15), fill=(100,100,100))
             if duration_ms > 0:
                 draw.line((38,15,38+round(((progress_ms / duration_ms) * 100) // 5),15), fill=(180,180,180))
@@ -120,13 +123,11 @@ class SpotifyScreen:
 
             draw.rectangle((32,0,33,32), fill=(0,0,0))
 
-            if self.current_art_img is not None:
-                frame.paste(self.current_art_img, (0,0))
-
             drawPlayPause(draw, self.control_mode, self.is_playing, self.play_color)
 
         else:
             self.current_art_url = ''
+            self.current_art_img = None
             self.is_playing = False
             drawPlayPause(draw, self.control_mode, self.is_playing, self.play_color)
             draw.text((0,3), "No Devices", self.title_color, font=self.font)
