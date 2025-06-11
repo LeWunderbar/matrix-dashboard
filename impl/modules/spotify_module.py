@@ -5,13 +5,13 @@ class SpotifyModule:
     def __init__(self, config):
         self.invalid = False
         
-        if config is not None and 'Spotify' in config and 'client_id' in config['Spotify'] \
+        if config != None and 'Spotify' in config and 'client_id' in config['Spotify'] \
             and 'client_secret' in config['Spotify'] and 'redirect_uri' in config['Spotify']:
             
             client_id = config['Spotify']['client_id']
             client_secret = config['Spotify']['client_secret']
             redirect_uri = config['Spotify']['redirect_uri']
-            if client_id is not "" and client_secret is not "" and redirect_uri is not "":
+            if client_id != "" and client_secret != "" and redirect_uri != "":
                 try:
                     os.environ["SPOTIPY_CLIENT_ID"] = client_id
                     os.environ["SPOTIPY_CLIENT_SECRET"] = client_secret
@@ -41,7 +41,7 @@ class SpotifyModule:
 
         try:
             track = self.sp.current_user_playing_track()
-            if (track is not None):
+            if (track != None):
                 if (track['item'] is None):
                     artist = None
                     title = None
