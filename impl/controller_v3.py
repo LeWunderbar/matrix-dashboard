@@ -133,14 +133,14 @@ def main():
 
     while (not encoderQueue.empty()):
         encoder_state += encoderQueue.get()
-    if (encoder_state > 0):
-        print("encoder increased")
-        inputStatusDict['value'] = InputStatusEnum.ENCODER_INCREASE
-        encoder_state = 0
-    elif (encoder_state < 0):
-        print("encoder decreased")
-        inputStatusDict['value'] = InputStatusEnum.ENCODER_DECREASE
-        encoder_state = 0
+        if (encoder_state > 0):
+            print("encoder increased")
+            inputStatusDict['value'] = InputStatusEnum.ENCODER_INCREASE
+            encoder_state = 0
+        elif (encoder_state < 0):
+            print("encoder decreased")
+            inputStatusDict['value'] = InputStatusEnum.ENCODER_DECREASE
+            encoder_state = 0
 
 
         inputStatusSnapshot = copy.copy(inputStatusDict['value'])
