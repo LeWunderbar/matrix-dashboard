@@ -113,7 +113,7 @@ class SpotifyModule:
             try:
                 devices = self.sp.devices()
                 curr_volume = devices['devices'][0]['volume_percent']
-                self.sp.volume(min(100, curr_volume + 5))
+                self.sp.volume(min(100, curr_volume + 10))
             except Exception as e:
                 print(e)
 
@@ -122,6 +122,6 @@ class SpotifyModule:
             try:
                 devices = self.sp.devices()
                 curr_volume = devices['devices'][0]['volume_percent']
-                self.sp.volume(max(0, curr_volume - 5))
+                self.sp.volume(max(0, curr_volume - 10))
             except Exception as e:
                 print(e)
