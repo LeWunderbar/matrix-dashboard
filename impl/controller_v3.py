@@ -27,7 +27,7 @@ from modules import weather_module, notification_module, spotify_module
 sw = 13   # rotary encoder’s push-button
 enc_A = 5 # otary encoder’s "A" (CLK)
 enc_B = 6 # The rotary encoder’s "B" (DT) 
-tilt = 19 # Tilt Switch
+tilt = 16 # Tilt Switch
 
 def main():
     brightness = 100
