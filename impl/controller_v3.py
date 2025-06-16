@@ -95,15 +95,30 @@ def main():
                     'spotify' : spotify_module.SpotifyModule(config)
                 }
 
-    app_list = [
-                    main_screen.MainScreen(config, modules, callbacks),
-                    spotify_player.SpotifyScreen(config, modules, callbacks),
-                    # notion_v2.NotionScreen(config, modules, callbacks),
-                    weather.WeatherScreen(config, modules, callbacks),
-                    # subcount.SubcountScreen(config, modules, callbacks),
-                    gif_viewer.GifScreen(config, modules, callbacks),
-                    # life.GameOfLifeScreen(config, modules, callbacks)
-                ]
+    # Read enabled apps from config
+    enabled_apps = {}
+    if config.has_section('Apps'):
+        for app_name in ['main_screen', 'spotify', 'notion_v2', 'weather', 'subcount', 'gif_viewer', 'life']:
+            enabled_apps[app_name] = config.getboolean('Apps', app_name, fallback=True)
+    else:
+        # fallback: enable all if section missing
+        enabled_apps = {k: True for k in ['main_screen', 'spotify', 'notion_v2', 'weather', 'subcount', 'gif_viewer', 'life']}
+
+    app_list = []
+    if enabled_apps['main_screen']:
+        app_list.append(main_screen.MainScreen(config, modules, callbacks))
+    if enabled_apps['spotify']:
+        app_list.append(spotify_player.SpotifyScreen(config, modules, callbacks))
+    if enabled_apps['notion_v2']:
+        app_list.append(notion_v2.NotionScreen(config, modules, callbacks))
+    if enabled_apps['weather']:
+        app_list.append(weather.WeatherScreen(config, modules, callbacks))
+    if enabled_apps['subcount']:
+        app_list.append(subcount.SubcountScreen(config, modules, callbacks))
+    if enabled_apps['gif_viewer']:
+        app_list.append(gif_viewer.GifScreen(config, modules, callbacks))
+    if enabled_apps['life']:
+        app_list.append(life.GameOfLifeScreen(config, modules, callbacks))
 
     currentdir = os.path.dirname(os.path.abspath(inspect.getfile(inspect.currentframe())))
     parentdir = os.path.dirname(currentdir)

@@ -30,6 +30,7 @@ This project is a customizable smart dashboard designed to display time, weather
 - 🔁 **Added New Config Options**  
   - `allow_app_rotation`: Enable or disable automatic rotation between apps.  
   - `temp_unit`: Choose between Celsius or Fahrenheit.
+  - `apps`: Allows the user to enable/disable apps via the config file.
 
 ---
 
