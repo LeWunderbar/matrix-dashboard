@@ -173,7 +173,7 @@ def main():
         if not displayOn:
             frame = black_screen
         
-        #matrix.brightness = 100
+        matrix.brightness = 100
         matrix.SetImage(frame)
         time.sleep(0.05)
 
